@@ -1,0 +1,1720 @@
+{
+  "info": {
+    "_postman_id": "386aab49-d770-41c8-82bd-7615ba605576",
+    "name": "GraphQL service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "album",
+      "item": [
+        {
+          "name": "albums",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'albums';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.items).to.be.an('array');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query {\r\n  albums {\r\n    items {\r\n      id\r\n      name\r\n      released\r\n      artists {\r\n        id\r\n        firstName\r\n        secondName\r\n        middleName\r\n        birthDate\r\n        birthPlace\r\n        country\r\n        instruments\r\n      }\r\n      bands {\r\n        id\r\n        name\r\n        origin\r\n        members {\r\n          artist\r\n          instrument\r\n          years\r\n        }\r\n        website\r\n      }\r\n      tracks {\r\n        id\r\n        title\r\n        album {\r\n          id\r\n          name\r\n          released\r\n          image\r\n        }\r\n        duration\r\n        released\r\n      }\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n      image\r\n    }\r\n    offset\r\n    limit\r\n    total\r\n  }\r\n}",
+                "variables": ""
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "album",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'album';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('null');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query($albumId: ID!) {\r\n  album(id: $albumId) {\r\n    id\r\n    name\r\n    released\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    tracks {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        image\r\n      }\r\n      duration\r\n      released\r\n    }\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    image\r\n  }\r\n}",
+                "variables": "{\r\n  \"albumId\": \"62c06418fb2e339a8d943d0b\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createAlbum",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createAlbum';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('name');\r",
+                  "\r",
+                  "  pm.environment.set('__album_id', jsonData?.data[entity]?.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateAlbumDto!) {\r\n  createAlbum(dto: $dto) {\r\n    id\r\n    name\r\n    released\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    tracks {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        image\r\n      }\r\n      duration\r\n      released\r\n    }\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    image\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"name\": \"name\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createAlbum without dto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createAlbum';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateAlbumDto!) {\r\n  createAlbum(dto: $dto) {\r\n    id\r\n    name\r\n    released\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    tracks {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        image\r\n      }\r\n      duration\r\n      released\r\n    }\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    image\r\n  }\r\n}",
+                "variables": "{}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createAlbum without authorization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createAlbum';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateAlbumDto!) {\r\n  createAlbum(dto: $dto) {\r\n    id\r\n    name\r\n    released\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    tracks {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        image\r\n      }\r\n      duration\r\n      released\r\n    }\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    image\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"name\": \"name\"\r\n  }\r\n}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateAlbum",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'updateAlbum';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('update_name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($updateAlbumId: ID!, $dto: UpdateAlbumDto!) {\r\n  updateAlbum(id: $updateAlbumId, dto: $dto) {\r\n    id\r\n    name\r\n    released\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    tracks {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        image\r\n      }\r\n      duration\r\n      released\r\n    }\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    image\r\n  }\r\n}",
+                "variables": "{\r\n  \"updateAlbumId\": \"{{__album_id}}\",\r\n  \"dto\": {\r\n      \"name\": \"update_name\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteAlbum",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'deleteAlbum';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('update_name');\r",
+                  "\r",
+                  "  pm.environment.unset('__album_id');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($deleteAlbumId: ID!) {\r\n  deleteAlbum(id: $deleteAlbumId) {\r\n    id\r\n    name\r\n    released\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    tracks {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        image\r\n      }\r\n      duration\r\n      released\r\n    }\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    image\r\n  }\r\n}",
+                "variables": "{\r\n  \"deleteAlbumId\": \"{{__album_id}}\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "artist",
+      "item": [
+        {
+          "name": "artists",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'artists';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.items).to.be.an('array');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query {\r\n  artists {\r\n    items {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      bands {\r\n        id\r\n        name\r\n        origin\r\n        members {\r\n          artist\r\n          instrument\r\n          years\r\n        }\r\n        website\r\n        genres {\r\n          id\r\n          name\r\n          description\r\n          country\r\n          year\r\n        }\r\n      }\r\n      instruments\r\n    }\r\n    offset\r\n    limit\r\n    total\r\n  }\r\n}",
+                "variables": ""
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "artist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'artist';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('null');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query($artistId: ID!) {\r\n  artist(id: $artistId) {\r\n    id\r\n    firstName\r\n    secondName\r\n    middleName\r\n    birthDate\r\n    birthPlace\r\n    country\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    instruments\r\n  }\r\n}",
+                "variables": "{\r\n  \"artistId\": \"62c06418fb2e339a8d943d0b\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createArtist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createArtist';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.country).to.be.equal('country');\r",
+                  "\r",
+                  "  pm.environment.set('__artist_id', jsonData?.data[entity]?.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateArtistDto!) {\r\n  createArtist(dto: $dto) {\r\n    id\r\n    firstName\r\n    secondName\r\n    middleName\r\n    birthDate\r\n    birthPlace\r\n    country\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    instruments\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"firstName\": \"firstName\",\r\n    \"secondName\": \"secondName\",\r\n    \"country\": \"country\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createArtist without dto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createArtist';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateArtistDto!) {\r\n  createArtist(dto: $dto) {\r\n    id\r\n    firstName\r\n    secondName\r\n    middleName\r\n    birthDate\r\n    birthPlace\r\n    country\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    instruments\r\n  }\r\n}",
+                "variables": "{}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createArtist without authorization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createArtist';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateArtistDto!) {\r\n  createArtist(dto: $dto) {\r\n    id\r\n    firstName\r\n    secondName\r\n    middleName\r\n    birthDate\r\n    birthPlace\r\n    country\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    instruments\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"firstName\": \"firstName\",\r\n    \"secondName\": \"secondName\",\r\n    \"country\": \"country\"\r\n  }\r\n}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateArtist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'updateArtist';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.country).to.be.equal('update_country');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($updateArtistId: ID!, $dto: UpdateArtistDto!) {\r\n  updateArtist(id: $updateArtistId, dto: $dto) {\r\n    id\r\n    firstName\r\n    secondName\r\n    middleName\r\n    birthDate\r\n    birthPlace\r\n    country\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    instruments\r\n  }\r\n}",
+                "variables": "{\r\n  \"updateArtistId\": \"{{__artist_id}}\",\r\n  \"dto\": {\r\n      \"country\": \"update_country\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteArtist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'deleteArtist';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.country).to.be.equal('update_country');\r",
+                  "\r",
+                  "  pm.environment.unset('__artist_id');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($deleteArtistId: ID!) {\r\n  deleteArtist(id: $deleteArtistId) {\r\n    id\r\n    firstName\r\n    secondName\r\n    middleName\r\n    birthDate\r\n    birthPlace\r\n    country\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    instruments\r\n  }\r\n}",
+                "variables": "{\r\n  \"deleteArtistId\": \"{{__artist_id}}\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "band",
+      "item": [
+        {
+          "name": "bands",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'bands';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.items).to.be.an('array');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query {\r\n  bands {\r\n    items {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    offset\r\n    limit\r\n    total\r\n  }\r\n}",
+                "variables": ""
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "band",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'band';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('null');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query($bandId: ID!) {\r\n  band(id: $bandId) {\r\n    id\r\n    name\r\n    origin\r\n    members {\r\n      artist\r\n      instrument\r\n      years\r\n    }\r\n    website\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"bandId\": \"62c06418fb2e339a8d943d0b\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBand",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createBand';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('name');\r",
+                  "\r",
+                  "  pm.environment.set('__band_id', jsonData?.data[entity]?.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateBandDto!) {\r\n  createBand(dto: $dto) {\r\n    id\r\n    name\r\n    origin\r\n    members {\r\n      artist\r\n      instrument\r\n      years\r\n    }\r\n    website\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"name\": \"name\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBand without dto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createBand';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateBandDto!) {\r\n  createBand(dto: $dto) {\r\n    id\r\n    name\r\n    origin\r\n    members {\r\n      artist\r\n      instrument\r\n      years\r\n    }\r\n    website\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBand without authorization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createBand';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateBandDto!) {\r\n  createBand(dto: $dto) {\r\n    id\r\n    name\r\n    origin\r\n    members {\r\n      artist\r\n      instrument\r\n      years\r\n    }\r\n    website\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"name\": \"name\"\r\n  }\r\n}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateBand",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'updateBand';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('update_name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($updateBandId: ID!, $dto: UpdateBandDto!) {\r\n  updateBand(id: $updateBandId, dto: $dto) {\r\n    id\r\n    name\r\n    origin\r\n    members {\r\n      artist\r\n      instrument\r\n      years\r\n    }\r\n    website\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"updateBandId\": \"{{__band_id}}\",\r\n  \"dto\": {\r\n      \"name\": \"update_name\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBand",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'deleteBand';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('update_name');\r",
+                  "\r",
+                  "  pm.environment.unset('__band_id');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($deleteBandId: ID!) {\r\n  deleteBand(id: $deleteBandId) {\r\n    id\r\n    name\r\n    origin\r\n    members {\r\n      artist\r\n      instrument\r\n      years\r\n    }\r\n    website\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"deleteBandId\": \"{{__band_id}}\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "genre",
+      "item": [
+        {
+          "name": "genres",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'genres';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.items).to.be.an('array');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query {\r\n  genres {\r\n    items {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n    offset\r\n    limit\r\n    total\r\n  }\r\n}",
+                "variables": ""
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "genre",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'genre';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('null');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query($genreId: ID!) {\r\n  genre(id: $genreId) {\r\n    id\r\n    name\r\n    description\r\n    country\r\n    year\r\n  }\r\n}",
+                "variables": "{\r\n  \"genreId\": \"62c06418fb2e339a8d943d0b\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createGenre",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createGenre';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('name');\r",
+                  "\r",
+                  "  pm.environment.set('__genre_id', jsonData?.data[entity]?.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateGenreDto!) {\r\n  createGenre(dto: $dto) {\r\n    id\r\n    name\r\n    description\r\n    country\r\n    year\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"name\": \"name\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createGenre without dto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createGenre';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateGenreDto!) {\r\n  createGenre(dto: $dto) {\r\n    id\r\n    name\r\n    description\r\n    country\r\n    year\r\n  }\r\n}",
+                "variables": "{}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createGenre without authorization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createGenre';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateGenreDto!) {\r\n  createGenre(dto: $dto) {\r\n    id\r\n    name\r\n    description\r\n    country\r\n    year\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"name\": \"name\"\r\n  }\r\n}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateGenre",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'updateGenre';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('update_name');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($updateGenreId: ID!, $dto: UpdateGenreDto!) {\r\n  updateGenre(id: $updateGenreId, dto: $dto) {\r\n    id\r\n    name\r\n    description\r\n    country\r\n    year\r\n  }\r\n}",
+                "variables": "{\r\n  \"updateGenreId\": \"{{__genre_id}}\",\r\n  \"dto\": {\r\n    \"name\": \"update_name\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteGenre",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'deleteGenre';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.name).to.be.equal('update_name');\r",
+                  "\r",
+                  "  pm.environment.unset('__genre_id');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($deleteGenreId: ID!) {\r\n  deleteGenre(id: $deleteGenreId) {\r\n    id\r\n    name\r\n    description\r\n    country\r\n    year\r\n  }\r\n}",
+                "variables": "{\r\n  \"deleteGenreId\": \"{{__genre_id}}\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "track",
+      "item": [
+        {
+          "name": "tracks",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'tracks';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.items).to.be.an('array');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query {\r\n  tracks {\r\n    items {\r\n      id\r\n      title\r\n      album {\r\n        id\r\n        name\r\n        released\r\n        tracks {\r\n          id\r\n          title\r\n          duration\r\n          released\r\n        }\r\n        image\r\n      }\r\n      artists {\r\n        id\r\n        firstName\r\n        secondName\r\n        middleName\r\n        birthDate\r\n        birthPlace\r\n        country\r\n        instruments\r\n      }\r\n      bands {\r\n        id\r\n        name\r\n        origin\r\n        members {\r\n          artist\r\n          instrument\r\n          years\r\n        }\r\n        website\r\n      }\r\n      duration\r\n      released\r\n      genres {\r\n        id\r\n        name\r\n        description\r\n        country\r\n        year\r\n      }\r\n    }\r\n    offset\r\n    limit\r\n    total\r\n  }\r\n}",
+                "variables": ""
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "track",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'track';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('null');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Query($trackId: ID!) {\r\n  track(id: $trackId) {\r\n    id\r\n    title\r\n    album {\r\n      id\r\n      name\r\n      released\r\n      tracks {\r\n        id\r\n        title\r\n        duration\r\n        released\r\n      }\r\n      image\r\n    }\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    duration\r\n    released\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"trackId\": \"62c06418fb2e339a8d943d0b\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createTrack",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createTrack';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.title).to.be.equal('title');\r",
+                  "\r",
+                  "  pm.environment.set('__track_id', jsonData?.data[entity]?.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateTrackDto!) {\r\n  createTrack(dto: $dto) {\r\n    id\r\n    title\r\n    album {\r\n      id\r\n      name\r\n      released\r\n      tracks {\r\n        id\r\n        title\r\n        duration\r\n        released\r\n      }\r\n      image\r\n    }\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    duration\r\n    released\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"title\": \"title\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createTrack without dto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createTrack';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateTrackDto!) {\r\n  createTrack(dto: $dto) {\r\n    id\r\n    title\r\n    album {\r\n      id\r\n      name\r\n      released\r\n      tracks {\r\n        id\r\n        title\r\n        duration\r\n        released\r\n      }\r\n      image\r\n    }\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    duration\r\n    released\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createTrack without authorization",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(400);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'createTrack';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('undefined');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('array');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($dto: CreateTrackDto!) {\r\n  createTrack(dto: $dto) {\r\n    id\r\n    title\r\n    album {\r\n      id\r\n      name\r\n      released\r\n      tracks {\r\n        id\r\n        title\r\n        duration\r\n        released\r\n      }\r\n      image\r\n    }\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    duration\r\n    released\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"dto\": {\r\n    \"title\": \"title\"\r\n  }\r\n}"
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateTrack",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'updateTrack';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.title).to.be.equal('update_title');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($updateTrackId: ID!, $dto: UpdateTrackDto!) {\r\n  updateTrack(id: $updateTrackId, dto: $dto) {\r\n    id\r\n    title\r\n    album {\r\n      id\r\n      name\r\n      released\r\n      tracks {\r\n        id\r\n        title\r\n        duration\r\n        released\r\n      }\r\n      image\r\n    }\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    duration\r\n    released\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"updateTrackId\": \"{{__track_id}}\",\r\n  \"dto\": {\r\n    \"title\": \"update_title\"\r\n  }\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteTrack",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Response is correct', () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "  pm.expect(pm.response.headers.get('Content-Type')).to.contains(\r",
+                  "    'application/json'\r",
+                  "  );\r",
+                  "\r",
+                  "  const jsonData = pm.response.json();\r",
+                  "  const entity = 'deleteTrack';\r",
+                  "\r",
+                  "  pm.expect(jsonData).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.data?.[entity]).to.be.an('object');\r",
+                  "  pm.expect(jsonData?.errors).to.be.an('undefined');\r",
+                  "\r",
+                  "  pm.expect(jsonData?.data?.[entity]?.title).to.be.equal('update_title');\r",
+                  "\r",
+                  "  pm.environment.unset('__track_id');\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Mutation($deleteTrackId: ID!) {\r\n  deleteTrack(id: $deleteTrackId) {\r\n    id\r\n    title\r\n    album {\r\n      id\r\n      name\r\n      released\r\n      tracks {\r\n        id\r\n        title\r\n        duration\r\n        released\r\n      }\r\n      image\r\n    }\r\n    artists {\r\n      id\r\n      firstName\r\n      secondName\r\n      middleName\r\n      birthDate\r\n      birthPlace\r\n      country\r\n      instruments\r\n    }\r\n    bands {\r\n      id\r\n      name\r\n      origin\r\n      members {\r\n        artist\r\n        instrument\r\n        years\r\n      }\r\n      website\r\n    }\r\n    duration\r\n    released\r\n    genres {\r\n      id\r\n      name\r\n      description\r\n      country\r\n      year\r\n    }\r\n  }\r\n}",
+                "variables": "{\r\n  \"deleteTrackId\": \"{{__track_id}}\"\r\n}"
+              },
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{SERVER_URL}}",
+              "host": ["{{SERVER_URL}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}

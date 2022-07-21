@@ -1,0 +1,8 @@
+{
+  "name": "node.js-basics",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": "^16.15.0"
+  }
+}
